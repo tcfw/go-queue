@@ -1,3 +1,5 @@
+[![Go Report Card](https://goreportcard.com/badge/github.com/tcfw/go-queue)](https://goreportcard.com/report/github.com/tcfw/go-queue)
+
 # Go-Queue
 
 A multi-threaded chan based queue worker 
