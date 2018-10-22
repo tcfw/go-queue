@@ -1,8 +1,10 @@
-[![Go Report Card](https://goreportcard.com/badge/github.com/tcfw/go-queue)](https://goreportcard.com/report/github.com/tcfw/go-queue)
-
 # Go-Queue
 
-A multi-threaded chan based queue worker 
+[![GoDoc](https://godoc.org/github.com/tcfw/go-queue?status.svg)](https://godoc.org/github.com/tcfw/go-queue)
+[![Go Report Card](https://goreportcard.com/badge/github.com/tcfw/go-queue)](https://goreportcard.com/report/github.com/tcfw/go-queue)
+
+
+A simple multi-threaded chan based queue worker 
 
 ## License
 Please refer to [LICENSE.md](https://github.com/tcfw/go-queue/LICENSE.md)
