@@ -5,6 +5,7 @@ import (
 	"runtime"
 	"sync"
 	"testing"
+	"time"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -17,12 +18,19 @@ func (j *Job) getMessage() string {
 	return j.msg
 }
 
-type Processor struct{}
+type Processor struct {
+	afterFunc func()
+}
 
 func (p Processor) Handle(job interface{}) {
-	job.(struct {
+	j := job.(struct {
 		wait *sync.WaitGroup
-	}).wait.Done()
+	})
+	j.wait.Done()
+
+	if p.afterFunc != nil {
+		p.afterFunc()
+	}
 }
 
 func TestNewDispatcher(t *testing.T) {
@@ -74,6 +82,35 @@ func TestDispatch(t *testing.T) {
 	wg.Wait()
 
 	dispatcher.Stop()
+}
+
+func TestQueueAfter(t *testing.T) {
+	p := &Processor{}
+
+	dispatcher := NewDispatcher(p)
+	dispatcher.MaxWorkers = 1
+	dispatcher.Run()
+
+	assert.Equal(t, len(dispatcher.Workers), 1)
+
+	var wg sync.WaitGroup
+	wg.Add(1)
+
+	sTime := time.Now()
+	var tDiff time.Duration
+	p.afterFunc = func() {
+		tDiff = time.Since(sTime)
+	}
+
+	dispatcher.QueueAfter(struct {
+		wait *sync.WaitGroup
+	}{
+		wait: &wg,
+	}, 2*time.Millisecond)
+
+	wg.Wait()
+
+	assert.Equal(t, tDiff.Milliseconds(), int64(2))
 }
 
 func DispatcherNWorkers(b *testing.B, workers int) {

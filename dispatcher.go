@@ -58,7 +58,7 @@ func (d *Dispatcher) Queue(job interface{}) {
 	d.jobQueue <- job
 }
 
-//QueueAfter sneds a job to be processed after x amount of time
+//QueueAfter sends a job to be processed after x amount of time
 func (d *Dispatcher) QueueAfter(job interface{}, t time.Duration) {
 	go func() {
 		time.Sleep(t)
