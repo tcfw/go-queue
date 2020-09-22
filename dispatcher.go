@@ -2,6 +2,7 @@ package queue
 
 import (
 	"runtime"
+	"time"
 
 	"github.com/prometheus/client_golang/prometheus"
 )
@@ -52,9 +53,17 @@ func (d *Dispatcher) Run() {
 	go d.dispatch()
 }
 
-//Queue sends a job into to be processed
+//Queue sends a job to be processed
 func (d *Dispatcher) Queue(job interface{}) {
 	d.jobQueue <- job
+}
+
+//QueueAfter sneds a job to be processed after x amount of time
+func (d *Dispatcher) QueueAfter(job interface{}, t time.Duration) {
+	go func() {
+		time.Sleep(t)
+		d.Queue(job)
+	}()
 }
 
 func (d *Dispatcher) dispatch() {

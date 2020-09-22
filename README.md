@@ -1,6 +1,6 @@
 # Go-Queue
 
-[![GoDoc](https://godoc.org/github.com/tcfw/go-queue?status.svg)](https://godoc.org/github.com/tcfw/go-queue)
+[![PkgGoDev](https://pkg.go.dev/badge/github.com/tcfw/go-queue)](https://pkg.go.dev/github.com/tcfw/go-queue)
 [![Go Report Card](https://goreportcard.com/badge/github.com/tcfw/go-queue)](https://goreportcard.com/report/github.com/tcfw/go-queue)
 
 
